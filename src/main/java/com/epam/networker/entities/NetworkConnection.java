@@ -86,4 +86,9 @@ public class NetworkConnection {
 		}
 		return true;
 	}
+
+	@Override
+	public String toString() {
+		return "NetworkConnection{" + "startNodeName=" + startNodeName + ", endNodeName=" + endNodeName + ", delay=" + delay + '}';
+	}
 }
