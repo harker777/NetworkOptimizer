@@ -56,4 +56,34 @@ public class NetworkConnection {
 	public boolean isHyperConductive() {
 		return getDelay() == 0;
 	}
+
+	@Override
+	public int hashCode() {
+		int hash = 3;
+		hash = 71 * hash + this.startNodeName;
+		hash = 71 * hash + this.endNodeName;
+		hash = 71 * hash + this.delay;
+		return hash;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (obj == null) {
+			return false;
+		}
+		if (getClass() != obj.getClass()) {
+			return false;
+		}
+		final NetworkConnection other = (NetworkConnection) obj;
+		if (this.startNodeName != other.startNodeName) {
+			return false;
+		}
+		if (this.endNodeName != other.endNodeName) {
+			return false;
+		}
+		if (this.delay != other.delay) {
+			return false;
+		}
+		return true;
+	}
 }
