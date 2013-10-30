@@ -22,7 +22,11 @@ public class NetworkConnection {
 	public NetworkConnection(char startNodeName, char endNodeName, int delay) {
 		this.startNodeName = startNodeName;
 		this.endNodeName = endNodeName;
-		this.delay = delay;
+		if (delay < 0) {
+			this.delay = 0;
+		} else {
+			this.delay = delay;
+		}
 	}
 
 	public char getStartNodeName() {
@@ -47,5 +51,9 @@ public class NetworkConnection {
 
 	public void setDelay(int delay) {
 		this.delay = delay;
+	}
+
+	public boolean isHyperConductive() {
+		return getDelay() == 0;
 	}
 }
