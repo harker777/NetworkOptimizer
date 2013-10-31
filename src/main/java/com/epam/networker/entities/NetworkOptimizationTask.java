@@ -3,6 +3,8 @@ package com.epam.networker.entities;
 import java.util.List;
 
 /**
+ * This class represents a network optimization task. It stores collection of Network connections
+ * and start-end nodes names.
  *
  * @author Iaroslav_Mazai
  */
@@ -12,6 +14,13 @@ public class NetworkOptimizationTask {
 	private char endNodeName;
 	private List<NetworkConnection> connections;
 
+	/**
+	 * Initializes object with specified start-end nodes names and connections list
+	 *
+	 * @param startNodeName
+	 * @param endNodeName
+	 * @param connections
+	 */
 	public NetworkOptimizationTask(char startNodeName, char endNodeName, List<NetworkConnection> connections) {
 		this.startNodeName = startNodeName;
 		this.endNodeName = endNodeName;

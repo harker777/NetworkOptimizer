@@ -1,8 +1,8 @@
 package com.epam.networker.entities;
 
 /**
- * This class represents a connection between two nodes. It stores two nodes names (as characters)
- * and delay to transfer data between them.
+ * This class represents a connection between two nodes. It stores their names (as characters) and
+ * delay to transfer data between them.
  *
  * @author Iaroslav_Mazai
  */
