@@ -105,4 +105,56 @@ public class SolversUtils {
 
 		return false;
 	}
+
+	/**
+	 * Checks if two connections are parallel. For example: (a,b,2) and (b,a,8) are parallel, but
+	 * (a,b,2) and (c,d,4) are not. Connection is not parallel to itself.
+	 *
+	 * @param firstConnection
+	 * @param secondConnection
+	 * @return
+	 */
+	public static boolean connectionsAreParallel(
+			NetworkConnection firstConnection, NetworkConnection secondConnection) {
+		// Cannot optimize connection with itself
+		if (firstConnection == secondConnection) {
+			return false;
+		}
+		if (firstConnection.getStartNodeName() == secondConnection.getStartNodeName()
+				&& firstConnection.getEndNodeName() == secondConnection.getEndNodeName()) {
+			return true;
+		}
+		if (firstConnection.getStartNodeName() == secondConnection.getEndNodeName()
+				&& firstConnection.getEndNodeName() == secondConnection.getStartNodeName()) {
+			return true;
+		}
+		return false;
+	}
+
+	/**
+	 * Checks if two connections are in series. For example: (a,b,2) and (b,c,8) are parallel, but
+	 * (a,b,2) and (c,d,4) are not. Connection is not in series with itself.
+	 *
+	 * @param firstConnection
+	 * @param secondConnection
+	 * @return
+	 */
+	public static boolean connectionsAreInSeries(
+			NetworkConnection firstConnection, NetworkConnection secondConnection) {
+		// Cannot optimize connection with itself
+		if (firstConnection == secondConnection) {
+			return false;
+		}
+		// It is a bad idea to optimize connections in series manner if they are parallel
+		if (connectionsAreParallel(firstConnection, secondConnection)) {
+			return false;
+		}
+		if (firstConnection.getStartNodeName() == secondConnection.getStartNodeName()
+				|| firstConnection.getStartNodeName() == secondConnection.getEndNodeName()
+				|| firstConnection.getEndNodeName() == secondConnection.getStartNodeName()
+				|| firstConnection.getEndNodeName() == secondConnection.getEndNodeName()) {
+			return true;
+		}
+		return false;
+	}
 }
