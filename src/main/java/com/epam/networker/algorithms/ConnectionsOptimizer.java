@@ -1,11 +1,10 @@
 package com.epam.networker.algorithms;
 
 import com.epam.networker.entities.NetworkConnection;
-import java.util.List;
 
 /**
- * This class is responsible for making optimizations of connections. His methods, given two connections will return one
- * connections, which is equivalent to them.
+ * This class is responsible for making optimizations of connections. His methods, given two
+ * connections will return one connections, which is equivalent to them.
  *
  * @author harker777
  */
@@ -20,7 +19,7 @@ public class ConnectionsOptimizer {
 	 */
 	public static NetworkConnection optimizeInSeriesConnections(
 			NetworkConnection firstConnection, NetworkConnection secondConnection) {
-		int newConnectionDelay = firstConnection.getDelay() + secondConnection.getDelay();
+		double newConnectionDelay = firstConnection.getDelay() + secondConnection.getDelay();
 		char newConnectionFirstNodeName = 'a';
 		char newConnectionSecondNodeName = 'a';
 
@@ -55,7 +54,7 @@ public class ConnectionsOptimizer {
 			NetworkConnection firstConnection, NetworkConnection secondConnection) {
 		char newConnectionFirstNodeName = firstConnection.getStartNodeName();
 		char newConnectionSecondNodeName = firstConnection.getEndNodeName();
-		float newConnectionDelay;
+		double newConnectionDelay;
 		if (firstConnection.isHyperConductive() && secondConnection.isHyperConductive()) {
 			newConnectionDelay = 0;
 		} else if (firstConnection.isHyperConductive() && !secondConnection.isHyperConductive()) {
@@ -64,8 +63,8 @@ public class ConnectionsOptimizer {
 			newConnectionDelay = firstConnection.getDelay() / 2;
 		} else {
 			newConnectionDelay = (firstConnection.getDelay() * secondConnection.getDelay())
-								 / (firstConnection.getDelay() + secondConnection.getDelay());
+					/ (firstConnection.getDelay() + secondConnection.getDelay());
 		}
-		return new NetworkConnection(newConnectionFirstNodeName, newConnectionSecondNodeName, (int) newConnectionDelay);
+		return new NetworkConnection(newConnectionFirstNodeName, newConnectionSecondNodeName, newConnectionDelay);
 	}
 }

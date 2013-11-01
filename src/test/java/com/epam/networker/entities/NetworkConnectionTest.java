@@ -9,16 +9,18 @@ import org.junit.Test;
  */
 public class NetworkConnectionTest {
 
+	private double eps = 0.0001;
+
 	/**
 	 * Checks that constructor with positive delay passed works.
 	 */
 	@Test
 	public void testConstructorWithGoodDelay() {
-		int delay = 5;
+		double delay = 5;
 		NetworkConnection instance = new NetworkConnection('a', 'b', delay);
-		int expResult = delay;
-		int actualResult = instance.getDelay();
-		assertEquals(expResult, actualResult);
+		double expResult = delay;
+		double actualResult = instance.getDelay();
+		assertEquals(expResult, actualResult, eps);
 	}
 
 	/**
@@ -26,11 +28,11 @@ public class NetworkConnectionTest {
 	 */
 	@Test
 	public void testConstructorWithBadDelay() {
-		int delay = -5;
+		double delay = -5;
 		NetworkConnection instance = new NetworkConnection('a', 'b', delay);
-		int expResult = 0;
-		int actualResult = instance.getDelay();
-		assertEquals(expResult, actualResult);
+		double expResult = 0;
+		double actualResult = instance.getDelay();
+		assertEquals(expResult, actualResult, eps);
 	}
 
 	/**
@@ -38,7 +40,7 @@ public class NetworkConnectionTest {
 	 */
 	@Test
 	public void testIsHyperConductiveReturnsTrueOnZeroDelay() {
-		int delay = 0;
+		double delay = 0;
 		NetworkConnection instance = new NetworkConnection('a', 'b', delay);
 		boolean expResult = true;
 		boolean actualResult = instance.isHyperConductive();
@@ -50,7 +52,7 @@ public class NetworkConnectionTest {
 	 */
 	@Test
 	public void testIsHyperConductiveReturnsFalseOnPositiveDelay() {
-		int delay = 4;
+		double delay = 4;
 		NetworkConnection instance = new NetworkConnection('a', 'b', delay);
 		boolean expResult = false;
 		boolean actualResult = instance.isHyperConductive();

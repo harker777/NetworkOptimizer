@@ -11,15 +11,15 @@ import java.util.List;
  */
 public class NaiveNetworkOptimizationTaskSolver implements NetworkOptimizationTaskSolver {
 
-	private List<NetworkConnection> connections;
-	private char startNodeName;
-	private char endNodeName;
+	private List<NetworkConnection> tempConnections;
+	private NetworkOptimizationTask task;
 
 	public List<NetworkConnection> solve(NetworkOptimizationTask taskToSolve) {
-		connections = new LinkedList<NetworkConnection>(taskToSolve.getConnections());
+		this.tempConnections = new LinkedList<NetworkConnection>(taskToSolve.getConnections());
+		this.task = taskToSolve;
 
 		// TODO: implement the algorithm
 
-		return connections;
+		return tempConnections;
 	}
 }

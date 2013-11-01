@@ -10,7 +10,7 @@ public class NetworkConnection {
 
 	private char startNodeName;
 	private char endNodeName;
-	private int delay;
+	private double delay;
 
 	/**
 	 * Creates a Network Connection instance with specified nodes names and delay
@@ -19,7 +19,7 @@ public class NetworkConnection {
 	 * @param endNodeName
 	 * @param delay
 	 */
-	public NetworkConnection(char startNodeName, char endNodeName, int delay) {
+	public NetworkConnection(char startNodeName, char endNodeName, double delay) {
 		this.startNodeName = startNodeName;
 		this.endNodeName = endNodeName;
 		if (delay < 0) {
@@ -45,11 +45,11 @@ public class NetworkConnection {
 		this.endNodeName = endNodeName;
 	}
 
-	public int getDelay() {
+	public double getDelay() {
 		return delay;
 	}
 
-	public void setDelay(int delay) {
+	public void setDelay(float delay) {
 		this.delay = delay;
 	}
 
@@ -62,7 +62,7 @@ public class NetworkConnection {
 		int hash = 3;
 		hash = 71 * hash + this.startNodeName;
 		hash = 71 * hash + this.endNodeName;
-		hash = 71 * hash + this.delay;
+		hash = 71 * hash + Double.valueOf(delay).hashCode();
 		return hash;
 	}
 

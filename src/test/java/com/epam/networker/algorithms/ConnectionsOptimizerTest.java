@@ -1,8 +1,8 @@
 package com.epam.networker.algorithms;
 
 import com.epam.networker.entities.NetworkConnection;
-import org.junit.Test;
 import static org.junit.Assert.*;
+import org.junit.Test;
 
 /**
  *
@@ -14,8 +14,8 @@ public class ConnectionsOptimizerTest {
 	}
 
 	/**
-	 * Checks if optimizeInSeries works right if common node is first in both connections, for example - (a,b,2),
-	 * (a,c,2) -> (b,c,4)
+	 * Checks if optimizeInSeries works right if common node is first in both connections, for
+	 * example - (a,b,2), (a,c,2) -> (b,c,4)
 	 */
 	@Test
 	public void testOptimizeInSeriesConnectionsWithCommonNodeFirstFirst() {
@@ -24,14 +24,14 @@ public class ConnectionsOptimizerTest {
 		NetworkConnection firstPossibleResult = new NetworkConnection('b', 'c', 4);
 		NetworkConnection secondPossibleResult = new NetworkConnection('c', 'b', 4);
 		NetworkConnection actualResult =
-						  ConnectionsOptimizer.optimizeInSeriesConnections(firstConnection, secondConnection);
+				ConnectionsOptimizer.optimizeInSeriesConnections(firstConnection, secondConnection);
 
 		assertTrue(actualResult.equals(firstPossibleResult) || actualResult.equals(secondPossibleResult));
 	}
 
 	/**
-	 * Checks if optimizeInSeries works right if common node is first in the first connection and second in the second
-	 * connection, for example - (a,b,2), (c,a,2) -> (b,c,4)
+	 * Checks if optimizeInSeries works right if common node is first in the first connection and
+	 * second in the second connection, for example - (a,b,2), (c,a,2) -> (b,c,4)
 	 */
 	@Test
 	public void testOptimizeInSeriesConnectionsWithCommonNodeFirstSecond() {
@@ -40,14 +40,14 @@ public class ConnectionsOptimizerTest {
 		NetworkConnection firstPossibleResult = new NetworkConnection('b', 'c', 4);
 		NetworkConnection secondPossibleResult = new NetworkConnection('c', 'b', 4);
 		NetworkConnection actualResult =
-						  ConnectionsOptimizer.optimizeInSeriesConnections(firstConnection, secondConnection);
+				ConnectionsOptimizer.optimizeInSeriesConnections(firstConnection, secondConnection);
 
 		assertTrue(actualResult.equals(firstPossibleResult) || actualResult.equals(secondPossibleResult));
 	}
 
 	/**
-	 * Checks if optimizeInSeries works right if common node is second the first connection and first in the second
-	 * connection, for example - (b,a,2), (a,c,2) -> (b,c,4)
+	 * Checks if optimizeInSeries works right if common node is second the first connection and
+	 * first in the second connection, for example - (b,a,2), (a,c,2) -> (b,c,4)
 	 */
 	@Test
 	public void testOptimizeInSeriesConnectionsWithCommonNodeSecondFirst() {
@@ -56,14 +56,14 @@ public class ConnectionsOptimizerTest {
 		NetworkConnection firstPossibleResult = new NetworkConnection('b', 'c', 4);
 		NetworkConnection secondPossibleResult = new NetworkConnection('c', 'b', 4);
 		NetworkConnection actualResult =
-						  ConnectionsOptimizer.optimizeInSeriesConnections(firstConnection, secondConnection);
+				ConnectionsOptimizer.optimizeInSeriesConnections(firstConnection, secondConnection);
 
 		assertTrue(actualResult.equals(firstPossibleResult) || actualResult.equals(secondPossibleResult));
 	}
 
 	/**
-	 * Checks if optimizeInSeries works right if common node is second in both connections, for example - (b,a,2),
-	 * (c,a,2) -> (b,c,4)
+	 * Checks if optimizeInSeries works right if common node is second in both connections, for
+	 * example - (b,a,2), (c,a,2) -> (b,c,4)
 	 */
 	@Test
 	public void testOptimizeInSeriesConnectionsWithCommonNodeSecondSecond() {
@@ -72,14 +72,14 @@ public class ConnectionsOptimizerTest {
 		NetworkConnection firstPossibleResult = new NetworkConnection('b', 'c', 4);
 		NetworkConnection secondPossibleResult = new NetworkConnection('c', 'b', 4);
 		NetworkConnection actualResult =
-						  ConnectionsOptimizer.optimizeInSeriesConnections(firstConnection, secondConnection);
+				ConnectionsOptimizer.optimizeInSeriesConnections(firstConnection, secondConnection);
 
 		assertTrue(actualResult.equals(firstPossibleResult) || actualResult.equals(secondPossibleResult));
 	}
 
 	/**
-	 * Checks if optimizeParallel works right when both connections are hyperConductive, for example - (a,b,0), (b,a,0)
-	 * -> (a,b,0)
+	 * Checks if optimizeParallel works right when both connections are hyperConductive, for example
+	 * - (a,b,0), (b,a,0) -> (a,b,0)
 	 */
 	@Test
 	public void testOptimizeParallelConnectionsWithBothHyperConductive() {
@@ -88,14 +88,14 @@ public class ConnectionsOptimizerTest {
 		NetworkConnection firstPossibleResult = new NetworkConnection('a', 'b', 0);
 		NetworkConnection secondPossibleResult = new NetworkConnection('b', 'a', 0);
 		NetworkConnection actualResult =
-						  ConnectionsOptimizer.optimizeParallelConnections(firstConnection, secondConnection);
+				ConnectionsOptimizer.optimizeParallelConnections(firstConnection, secondConnection);
 
 		assertTrue(actualResult.equals(firstPossibleResult) || actualResult.equals(secondPossibleResult));
 	}
 
 	/**
-	 * Checks if optimizeParallel works right when only first connection is hyperConductive, for example - (a,b,0),
-	 * (b,a,2) -> (a,b,1)
+	 * Checks if optimizeParallel works right when only first connection is hyperConductive, for
+	 * example - (a,b,0), (b,a,2) -> (a,b,1)
 	 */
 	@Test
 	public void testOptimizeParallelConnectionsWithFirstHyperConductive() {
@@ -104,14 +104,14 @@ public class ConnectionsOptimizerTest {
 		NetworkConnection firstPossibleResult = new NetworkConnection('a', 'b', 1);
 		NetworkConnection secondPossibleResult = new NetworkConnection('b', 'a', 1);
 		NetworkConnection actualResult =
-						  ConnectionsOptimizer.optimizeParallelConnections(firstConnection, secondConnection);
+				ConnectionsOptimizer.optimizeParallelConnections(firstConnection, secondConnection);
 
 		assertTrue(actualResult.equals(firstPossibleResult) || actualResult.equals(secondPossibleResult));
 	}
 
 	/**
-	 * Checks if optimizeParallel works right when only second connection is hyperConductive, for example - (a,b,2),
-	 * (b,a,0) -> (a,b,1)
+	 * Checks if optimizeParallel works right when only second connection is hyperConductive, for
+	 * example - (a,b,2), (b,a,0) -> (a,b,1)
 	 */
 	@Test
 	public void testOptimizeParallelConnectionsWithSecondHyperConductive() {
@@ -120,14 +120,14 @@ public class ConnectionsOptimizerTest {
 		NetworkConnection firstPossibleResult = new NetworkConnection('a', 'b', 1);
 		NetworkConnection secondPossibleResult = new NetworkConnection('b', 'a', 1);
 		NetworkConnection actualResult =
-						  ConnectionsOptimizer.optimizeParallelConnections(firstConnection, secondConnection);
+				ConnectionsOptimizer.optimizeParallelConnections(firstConnection, secondConnection);
 
 		assertTrue(actualResult.equals(firstPossibleResult) || actualResult.equals(secondPossibleResult));
 	}
 
 	/**
-	 * Checks if optimizeParallel works right when both connections are not hyperConductive, for example - (a,b,8),
-	 * (b,a,8) -> (a,b,4)
+	 * Checks if optimizeParallel works right when both connections are not hyperConductive, for
+	 * example - (a,b,8), (b,a,8) -> (a,b,4)
 	 */
 	@Test
 	public void testOptimizeParallelConnectionsWithNoneHyperConductive() {
@@ -136,7 +136,7 @@ public class ConnectionsOptimizerTest {
 		NetworkConnection firstPossibleResult = new NetworkConnection('a', 'b', 4);
 		NetworkConnection secondPossibleResult = new NetworkConnection('b', 'a', 4);
 		NetworkConnection actualResult =
-						  ConnectionsOptimizer.optimizeParallelConnections(firstConnection, secondConnection);
+				ConnectionsOptimizer.optimizeParallelConnections(firstConnection, secondConnection);
 
 		assertTrue(actualResult.equals(firstPossibleResult) || actualResult.equals(secondPossibleResult));
 	}
