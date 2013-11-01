@@ -95,14 +95,14 @@ public class ConnectionsOptimizerTest {
 
 	/**
 	 * Checks if optimizeParallel works right when only first connection is hyperConductive, for
-	 * example - (a,b,0), (b,a,2) -> (a,b,1)
+	 * example - (a,b,0), (b,a,2) -> (a,b,0)
 	 */
 	@Test
 	public void testOptimizeParallelConnectionsWithFirstHyperConductive() {
 		NetworkConnection firstConnection = new NetworkConnection('a', 'b', 0);
 		NetworkConnection secondConnection = new NetworkConnection('b', 'a', 2);
-		NetworkConnection firstPossibleResult = new NetworkConnection('a', 'b', 1);
-		NetworkConnection secondPossibleResult = new NetworkConnection('b', 'a', 1);
+		NetworkConnection firstPossibleResult = new NetworkConnection('a', 'b', 0);
+		NetworkConnection secondPossibleResult = new NetworkConnection('b', 'a', 0);
 		NetworkConnection actualResult =
 				ConnectionsOptimizer.optimizeParallelConnections(firstConnection, secondConnection);
 
@@ -111,14 +111,14 @@ public class ConnectionsOptimizerTest {
 
 	/**
 	 * Checks if optimizeParallel works right when only second connection is hyperConductive, for
-	 * example - (a,b,2), (b,a,0) -> (a,b,1)
+	 * example - (a,b,2), (b,a,0) -> (a,b,0)
 	 */
 	@Test
 	public void testOptimizeParallelConnectionsWithSecondHyperConductive() {
 		NetworkConnection firstConnection = new NetworkConnection('a', 'b', 2);
 		NetworkConnection secondConnection = new NetworkConnection('b', 'a', 0);
-		NetworkConnection firstPossibleResult = new NetworkConnection('a', 'b', 1);
-		NetworkConnection secondPossibleResult = new NetworkConnection('b', 'a', 1);
+		NetworkConnection firstPossibleResult = new NetworkConnection('a', 'b', 0);
+		NetworkConnection secondPossibleResult = new NetworkConnection('b', 'a', 0);
 		NetworkConnection actualResult =
 				ConnectionsOptimizer.optimizeParallelConnections(firstConnection, secondConnection);
 

@@ -55,12 +55,8 @@ public class ConnectionsOptimizer {
 		char newConnectionFirstNodeName = firstConnection.getStartNodeName();
 		char newConnectionSecondNodeName = firstConnection.getEndNodeName();
 		double newConnectionDelay;
-		if (firstConnection.isHyperConductive() && secondConnection.isHyperConductive()) {
+		if (firstConnection.isHyperConductive() || secondConnection.isHyperConductive()) {
 			newConnectionDelay = 0;
-		} else if (firstConnection.isHyperConductive() && !secondConnection.isHyperConductive()) {
-			newConnectionDelay = secondConnection.getDelay() / 2;
-		} else if (!firstConnection.isHyperConductive() && secondConnection.isHyperConductive()) {
-			newConnectionDelay = firstConnection.getDelay() / 2;
 		} else {
 			newConnectionDelay = (firstConnection.getDelay() * secondConnection.getDelay())
 					/ (firstConnection.getDelay() + secondConnection.getDelay());

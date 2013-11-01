@@ -75,13 +75,14 @@ public class NetworkConnection {
 			return false;
 		}
 		final NetworkConnection other = (NetworkConnection) obj;
+		double eps = 0.0001;
 		if (this.startNodeName != other.startNodeName) {
 			return false;
 		}
 		if (this.endNodeName != other.endNodeName) {
 			return false;
 		}
-		if (this.delay != other.delay) {
+		if (Math.abs(this.delay - other.delay) > eps) {
 			return false;
 		}
 		return true;
