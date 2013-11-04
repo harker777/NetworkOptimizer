@@ -9,6 +9,8 @@ import java.util.LinkedList;
 import java.util.List;
 
 /**
+ * This class implements naive implementation of task solver by applying best (by rank)
+ * optimizations
  *
  * @author Iaroslav_Mazai
  */
@@ -17,6 +19,14 @@ public class NaiveNetworkOptimizationTaskSolver implements NetworkOptimizationTa
 	private List<NetworkConnection> tempConnections;
 	private NetworkOptimizationTask task;
 
+	/**
+	 * Solves the given NetworkOptimizationTask using naive algorithm. On every step it tries to
+	 * optimize some internal connections. If there are no such optimization it tries to apply any
+	 * optimization. Optimizations with higher rank are applied earlier.
+	 *
+	 * @param taskToSolve
+	 * @return
+	 */
 	public List<NetworkConnection> solve(NetworkOptimizationTask taskToSolve) {
 		this.tempConnections = new LinkedList<NetworkConnection>(taskToSolve.getConnections());
 		this.task = taskToSolve;
@@ -26,9 +36,11 @@ public class NaiveNetworkOptimizationTaskSolver implements NetworkOptimizationTa
 			boolean someOptimizationSucceded = false;
 			boolean internalOptimizationSucceded = applySomeInternalConnectionsOptimization();
 
+			// If failed, try to optimize all the connections
 			if (!internalOptimizationSucceded) {
 				someOptimizationSucceded = applySomeConnectionsOptimization();
 			}
+			// If no optimizations found at all - that's the end
 			if (!internalOptimizationSucceded && !someOptimizationSucceded) {
 				break;
 			}
@@ -37,12 +49,19 @@ public class NaiveNetworkOptimizationTaskSolver implements NetworkOptimizationTa
 		return this.tempConnections;
 	}
 
+	/**
+	 * Finds all internal connections optimizations and tries to optimize the best one (based on
+	 * rank). If no optimizations are available returns false, else applies the best one and returns
+	 * true.
+	 *
+	 * @return
+	 */
 	private boolean applySomeInternalConnectionsOptimization() {
 		List<NetworkConnection> intermediateConnections = SolversUtils.getIntermediateConnections(
 				tempConnections, task.getStartNodeName(), task.getEndNodeName());
 		List<Optimization> possibleIntermediateOptimizations = new LinkedList<Optimization>();
 
-		// Find all possible internal optimizations
+		// Find all possible internal optimizations and add them to possibleIntermediateOptimizations list
 		for (NetworkConnection firstNetworkConnection : intermediateConnections) {
 			for (NetworkConnection secondNetworkConnection : intermediateConnections) {
 				boolean connectionsAreParallel = SolversUtils.
@@ -62,7 +81,7 @@ public class NaiveNetworkOptimizationTaskSolver implements NetworkOptimizationTa
 			}
 		}
 
-		// If there are some optimizations on on internal connections apply the best of them
+		// If there are some optimizations on internal connections - apply the best one and return true
 		if (possibleIntermediateOptimizations.size() > 0) {
 			applyBestOptimization(possibleIntermediateOptimizations);
 			return true;
@@ -71,9 +90,16 @@ public class NaiveNetworkOptimizationTaskSolver implements NetworkOptimizationTa
 		}
 	}
 
+	/**
+	 * Finds all connections optimizations and tries to optimize the best one. If no optimizations
+	 * are available returns false, else applies the best one and returns true.
+	 *
+	 * @return
+	 */
 	private boolean applySomeConnectionsOptimization() {
 		List<Optimization> allPossibleOptimizations = new LinkedList<Optimization>();
 
+		// Find all possible optimizations and add them to allPossibleOptimizations list
 		for (NetworkConnection firstNetworkConnection : tempConnections) {
 			for (NetworkConnection secondNetworkConnection : tempConnections) {
 				boolean connectionsAreParallel = SolversUtils.
@@ -108,6 +134,8 @@ public class NaiveNetworkOptimizationTaskSolver implements NetworkOptimizationTa
 				}
 			}
 		}
+
+		// If there are some optimizations - apply the best one and return true
 		if (allPossibleOptimizations.size() > 0) {
 			applyBestOptimization(allPossibleOptimizations);
 			return true;
@@ -116,15 +144,34 @@ public class NaiveNetworkOptimizationTaskSolver implements NetworkOptimizationTa
 		}
 	}
 
+	/**
+	 * Applies the best optimization on internal temporary connections list. Based on
+	 * finBestOptimization method
+	 *
+	 * @param possibleOptimizations
+	 */
 	private void applyBestOptimization(List<Optimization> possibleOptimizations) {
 		Optimization bestOptimization = findBestOptimization(possibleOptimizations);
 		applyOptimization(tempConnections, bestOptimization);
 	}
 
+	/**
+	 * Return the best optimization (based on their rank)
+	 *
+	 * @param optimizations
+	 * @return
+	 */
 	private Optimization findBestOptimization(List<Optimization> optimizations) {
 		return Collections.max(optimizations);
 	}
 
+	/**
+	 * Applies the given optimization to given list. It modifies the list by removing old
+	 * connections and adding the new one (result of optimization)
+	 *
+	 * @param connections
+	 * @param optimization
+	 */
 	private void applyOptimization(List<NetworkConnection> connections, Optimization optimization) {
 		NetworkConnection newConnection;
 		if (optimization.getType() == OptimizationType.IN_SERIES) {

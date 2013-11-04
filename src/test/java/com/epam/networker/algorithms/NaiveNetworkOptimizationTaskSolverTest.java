@@ -30,6 +30,10 @@ public class NaiveNetworkOptimizationTaskSolverTest {
 			new LinkedList<NetworkConnection>(Arrays.asList(connectionsForSmallTaskArray));
 	NetworkOptimizationTask smallTask = new NetworkOptimizationTask('a', 'b', connectionsForSmallTask);
 
+	/**
+	 * Checks if naiveOptimizationTaskSolver return right result on small task
+	 *
+	 */
 	@Test
 	public void testSolveWithSmallTask() {
 		NetworkOptimizationTaskSolver solver = new NaiveNetworkOptimizationTaskSolver();
