@@ -21,76 +21,99 @@ public class NaiveNetworkOptimizationTaskSolver implements NetworkOptimizationTa
 		this.tempConnections = new LinkedList<NetworkConnection>(taskToSolve.getConnections());
 		this.task = taskToSolve;
 
-		int iterationsNumberLimit = 100;
-		for (int i = 0; i < iterationsNumberLimit; i++) {
-
+		while (true) {
 			// First, try to optimize internal connections
-			List<NetworkConnection> intermediateConnections = SolversUtils.getIntermediateConnections(
-					tempConnections, task.getStartNodeName(), task.getEndNodeName());
-			List<Optimization> possibleIntermediateOptimizations = new LinkedList<Optimization>();
-			List<Optimization> allPossibleOptimizations = new LinkedList<Optimization>();
+			boolean someOptimizationSucceded = false;
+			boolean internalOptimizationSucceded = applySomeInternalConnectionsOptimization();
 
-			// Find all possible internal optimizations 
-			for (NetworkConnection firstNetworkConnection : intermediateConnections) {
-				for (NetworkConnection secondNetworkConnection : intermediateConnections) {
-					boolean connectionsAreParallel = SolversUtils.
-							connectionsAreParallel(firstNetworkConnection, secondNetworkConnection);
-					boolean connectionsAreInSeries = SolversUtils.
-							connectionsAreInSeries(firstNetworkConnection, secondNetworkConnection);
-
-					if (connectionsAreParallel) {
-						Optimization optimization =
-								new Optimization(firstNetworkConnection, secondNetworkConnection, OptimizationType.PARALLEL);
-						possibleIntermediateOptimizations.add(optimization);
-					} else if (connectionsAreInSeries) {
-						Optimization optimization =
-								new Optimization(firstNetworkConnection, secondNetworkConnection, OptimizationType.IN_SERIES);
-						possibleIntermediateOptimizations.add(optimization);
-					}
-				}
+			if (!internalOptimizationSucceded) {
+				someOptimizationSucceded = applySomeConnectionsOptimization();
 			}
-
-			// If there are some optimizations on on internal connections apply the best of them
-			if (possibleIntermediateOptimizations.size() > 0) {
-				applyBestOptimization(possibleIntermediateOptimizations);
-			} else {
-				for (NetworkConnection firstNetworkConnection : tempConnections) {
-					for (NetworkConnection secondNetworkConnection : tempConnections) {
-						boolean connectionsAreParallel = SolversUtils.
-								connectionsAreParallel(firstNetworkConnection, secondNetworkConnection);
-						boolean connectionsAreInSeries = SolversUtils.
-								connectionsAreInSeries(firstNetworkConnection, secondNetworkConnection);
-
-						boolean firstConnectionIsBoundary =
-								SolversUtils.isConnectionBoundary(firstNetworkConnection, task.getStartNodeName(), task.getEndNodeName());
-						boolean secondConnectionIsBoundary =
-								SolversUtils.isConnectionBoundary(secondNetworkConnection, task.getStartNodeName(), task.getEndNodeName());
-						boolean connectionsCanBeOptimizedParallel =
-								connectionsAreParallel && (!firstConnectionIsBoundary && !secondConnectionIsBoundary);
-
-						if (connectionsCanBeOptimizedParallel) {
-							Optimization optimization =
-									new Optimization(firstNetworkConnection, secondNetworkConnection, OptimizationType.PARALLEL);
-							allPossibleOptimizations.add(optimization);
-						} else if (connectionsAreInSeries) {
-							Optimization optimization =
-									new Optimization(firstNetworkConnection, secondNetworkConnection, OptimizationType.IN_SERIES);
-							allPossibleOptimizations.add(optimization);
-						}
-					}
-				}
-				if (allPossibleOptimizations.size() > 0) {
-					applyBestOptimization(allPossibleOptimizations);
-				}
-
-			}
-
-			if (allPossibleOptimizations.isEmpty() && possibleIntermediateOptimizations.isEmpty()) {
+			if (!internalOptimizationSucceded && !someOptimizationSucceded) {
 				break;
 			}
-
 		}
-		return tempConnections;
+
+		return this.tempConnections;
+	}
+
+	private boolean applySomeInternalConnectionsOptimization() {
+		List<NetworkConnection> intermediateConnections = SolversUtils.getIntermediateConnections(
+				tempConnections, task.getStartNodeName(), task.getEndNodeName());
+		List<Optimization> possibleIntermediateOptimizations = new LinkedList<Optimization>();
+
+		// Find all possible internal optimizations
+		for (NetworkConnection firstNetworkConnection : intermediateConnections) {
+			for (NetworkConnection secondNetworkConnection : intermediateConnections) {
+				boolean connectionsAreParallel = SolversUtils.
+						connectionsAreParallel(firstNetworkConnection, secondNetworkConnection);
+				boolean connectionsAreInSeries = SolversUtils.
+						connectionsAreInSeries(firstNetworkConnection, secondNetworkConnection);
+
+				if (connectionsAreParallel) {
+					Optimization optimization =
+							new Optimization(firstNetworkConnection, secondNetworkConnection, OptimizationType.PARALLEL);
+					possibleIntermediateOptimizations.add(optimization);
+				} else if (connectionsAreInSeries) {
+					Optimization optimization =
+							new Optimization(firstNetworkConnection, secondNetworkConnection, OptimizationType.IN_SERIES);
+					possibleIntermediateOptimizations.add(optimization);
+				}
+			}
+		}
+
+		// If there are some optimizations on on internal connections apply the best of them
+		if (possibleIntermediateOptimizations.size() > 0) {
+			applyBestOptimization(possibleIntermediateOptimizations);
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	private boolean applySomeConnectionsOptimization() {
+		List<Optimization> allPossibleOptimizations = new LinkedList<Optimization>();
+
+		for (NetworkConnection firstNetworkConnection : tempConnections) {
+			for (NetworkConnection secondNetworkConnection : tempConnections) {
+				boolean connectionsAreParallel = SolversUtils.
+						connectionsAreParallel(firstNetworkConnection, secondNetworkConnection);
+				boolean connectionsAreInSeries = SolversUtils.
+						connectionsAreInSeries(firstNetworkConnection, secondNetworkConnection);
+
+				boolean firstConnectionIsBoundary =
+						SolversUtils.isConnectionBoundary(firstNetworkConnection, task.getStartNodeName(), task.getEndNodeName());
+				boolean secondConnectionIsBoundary =
+						SolversUtils.isConnectionBoundary(secondNetworkConnection, task.getStartNodeName(), task.getEndNodeName());
+				boolean bothConnectionsAreComplete =
+						SolversUtils.isConnectionComplete(firstNetworkConnection, task.getStartNodeName(), task.getEndNodeName());
+				boolean connectionsCanBeOptimizedParallel =
+						connectionsAreParallel && ((!firstConnectionIsBoundary && !secondConnectionIsBoundary)
+						|| bothConnectionsAreComplete);
+
+				boolean commonConnectionIsBoundary =
+						SolversUtils.getCommonNodes(firstNetworkConnection, secondNetworkConnection).contains(task.getStartNodeName())
+						|| SolversUtils.getCommonNodes(firstNetworkConnection, secondNetworkConnection).contains(task.getEndNodeName());
+				boolean connectionsCanBeOptimizedInSeries =
+						connectionsAreInSeries && !commonConnectionIsBoundary;
+
+				if (connectionsCanBeOptimizedParallel) {
+					Optimization optimization =
+							new Optimization(firstNetworkConnection, secondNetworkConnection, OptimizationType.PARALLEL);
+					allPossibleOptimizations.add(optimization);
+				} else if (connectionsCanBeOptimizedInSeries) {
+					Optimization optimization =
+							new Optimization(firstNetworkConnection, secondNetworkConnection, OptimizationType.IN_SERIES);
+					allPossibleOptimizations.add(optimization);
+				}
+			}
+		}
+		if (allPossibleOptimizations.size() > 0) {
+			applyBestOptimization(allPossibleOptimizations);
+			return true;
+		} else {
+			return false;
+		}
 	}
 
 	private void applyBestOptimization(List<Optimization> possibleOptimizations) {
@@ -103,9 +126,6 @@ public class NaiveNetworkOptimizationTaskSolver implements NetworkOptimizationTa
 	}
 
 	private void applyOptimization(List<NetworkConnection> connections, Optimization optimization) {
-		System.out.println("Applying optimization:");
-		System.out.println(optimization.getFirstConnection());
-		System.out.println(optimization.getSecondConnection());
 		NetworkConnection newConnection;
 		if (optimization.getType() == OptimizationType.IN_SERIES) {
 			newConnection = ConnectionsOptimizer.optimizeInSeriesConnections(
@@ -115,8 +135,6 @@ public class NaiveNetworkOptimizationTaskSolver implements NetworkOptimizationTa
 					optimization.getFirstConnection(), optimization.getSecondConnection());
 		}
 
-		System.out.println(newConnection);
-		System.out.println("----------------");
 		connections.remove(optimization.getFirstConnection());
 		connections.remove(optimization.getSecondConnection());
 		connections.add(newConnection);

@@ -2,8 +2,10 @@ package com.epam.networker.algorithms;
 
 import com.epam.networker.entities.NetworkConnection;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Set;
 
 /**
  * This class includes some utility methods for solvers (determining connection type etc.)
@@ -156,5 +158,23 @@ public class SolversUtils {
 			return true;
 		}
 		return false;
+	}
+
+	public static Set<Character> getCommonNodes(
+			NetworkConnection firstConnection, NetworkConnection secondConnection) {
+		Set<Character> commonNodes = new HashSet<Character>();
+		if (firstConnection.getStartNodeName() == secondConnection.getStartNodeName()) {
+			commonNodes.add(firstConnection.getStartNodeName());
+		}
+		if (firstConnection.getStartNodeName() == secondConnection.getEndNodeName()) {
+			commonNodes.add(firstConnection.getStartNodeName());
+		}
+		if (firstConnection.getEndNodeName() == secondConnection.getStartNodeName()) {
+			commonNodes.add(firstConnection.getEndNodeName());
+		}
+		if (firstConnection.getEndNodeName() == secondConnection.getEndNodeName()) {
+			commonNodes.add(firstConnection.getEndNodeName());
+		}
+		return commonNodes;
 	}
 }
