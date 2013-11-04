@@ -14,6 +14,12 @@ public class Optimization implements Comparable<Optimization> {
 	private NetworkConnection secondConnection;
 	private OptimizationType type;
 
+	/**
+	 *
+	 * @param firstConnection
+	 * @param secondConnection
+	 * @param type
+	 */
 	public Optimization(NetworkConnection firstConnection, NetworkConnection secondConnection, OptimizationType type) {
 		this.firstConnection = firstConnection;
 		this.secondConnection = secondConnection;
@@ -44,31 +50,58 @@ public class Optimization implements Comparable<Optimization> {
 		this.type = type;
 	}
 
-	public boolean isParallelWithOneHyperConductive() {
+	/**
+	 * Checks if optimization is parallel and only one connection is hyperConductive
+	 *
+	 * @return
+	 */
+	public boolean isParallelWithOnlyOneHyperConductive() {
 		boolean isParallel = (this.type == OptimizationType.PARALLEL);
 		boolean onlyFirstIsHyperConductive = (firstConnection.isHyperConductive() && !secondConnection.isHyperConductive());
 		boolean onlySecondIsHyperConductive = (firstConnection.isHyperConductive() && !secondConnection.isHyperConductive());
 		return isParallel && (onlyFirstIsHyperConductive || onlySecondIsHyperConductive);
 	}
 
+	/**
+	 * Checks if optimization is parallel and both connections are hyperConductive
+	 *
+	 * @return
+	 */
 	public boolean isParallelWithBothHyperConductive() {
 		boolean isParallel = (this.type == OptimizationType.PARALLEL);
 		boolean bothHyperConductive = (firstConnection.isHyperConductive() && secondConnection.isHyperConductive());
 		return isParallel && bothHyperConductive;
 	}
 
+	/**
+	 * Checks if optimization is parallel and both connections are not hyperConductive
+	 *
+	 * @return
+	 */
 	public boolean isParallelWithoutHyperConductive() {
 		boolean isParallel = (this.type == OptimizationType.PARALLEL);
 		boolean bothNotHyperConductive = (!firstConnection.isHyperConductive() && !secondConnection.isHyperConductive());
 		return isParallel && bothNotHyperConductive;
 	}
 
+	/**
+	 * Checks if optimization is inSeries
+	 *
+	 * @return
+	 */
 	public boolean isInSeries() {
 		return this.type == OptimizationType.IN_SERIES;
 	}
 
+	/**
+	 * Returns the rank of this optimization. 4 - it is parallel and only one connection is
+	 * hyperConductive; 3 - it is parallel and no connections are hyperConductive; 2 - it is
+	 * parallel and both connections are hyperConductive; 1 - it is inSeries optimization.
+	 *
+	 * @return
+	 */
 	public int getRank() {
-		if (this.isParallelWithOneHyperConductive()) {
+		if (this.isParallelWithOnlyOneHyperConductive()) {
 			return 4;
 		} else if (this.isParallelWithoutHyperConductive()) {
 			return 3;
@@ -79,6 +112,13 @@ public class Optimization implements Comparable<Optimization> {
 		}
 	}
 
+	/**
+	 * Compares to optimizations based on their rank.
+	 *
+	 * @param that
+	 * @return
+	 */
+	@Override
 	public int compareTo(Optimization that) {
 		return (this.getRank() - that.getRank());
 	}
