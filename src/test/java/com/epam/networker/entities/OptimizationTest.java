@@ -167,7 +167,7 @@ public class OptimizationTest {
 	}
 
 	@Test
-	public void testIsInSeriesReturnsFourOnParallelWithOnlyOneHyperConductive() {
+	public void testGetRankReturnsFourOnParallelWithOnlyOneHyperConductive() {
 		NetworkConnection firstConnection = new NetworkConnection('a', 'b', 0);
 		NetworkConnection secondConnection = new NetworkConnection('b', 'a', 8);
 		Optimization optimization = new Optimization(firstConnection, secondConnection, OptimizationType.PARALLEL);
@@ -178,7 +178,7 @@ public class OptimizationTest {
 	}
 
 	@Test
-	public void testIsInSeriesReturnsThreeOnParallelWithoutHyperConductive() {
+	public void testGetRankReturnsThreeOnParallelWithoutHyperConductive() {
 		NetworkConnection firstConnection = new NetworkConnection('a', 'b', 4);
 		NetworkConnection secondConnection = new NetworkConnection('b', 'a', 8);
 		Optimization optimization = new Optimization(firstConnection, secondConnection, OptimizationType.PARALLEL);
@@ -189,7 +189,7 @@ public class OptimizationTest {
 	}
 
 	@Test
-	public void testIsInSeriesReturnsTwoOnParallelWithBothHyperConductive() {
+	public void testGetRankReturnsTwoOnParallelWithBothHyperConductive() {
 		NetworkConnection firstConnection = new NetworkConnection('a', 'b', 0);
 		NetworkConnection secondConnection = new NetworkConnection('b', 'a', 0);
 		Optimization optimization = new Optimization(firstConnection, secondConnection, OptimizationType.PARALLEL);
@@ -200,7 +200,7 @@ public class OptimizationTest {
 	}
 
 	@Test
-	public void testIsInSeriesReturnsFourOnInSeries() {
+	public void testGetRankReturnsOneOnInSeries() {
 		NetworkConnection firstConnection = new NetworkConnection('a', 'b', 0);
 		NetworkConnection secondConnection = new NetworkConnection('b', 'c', 4);
 		Optimization optimization = new Optimization(firstConnection, secondConnection, OptimizationType.IN_SERIES);
