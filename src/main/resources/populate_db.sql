@@ -1,0 +1,1 @@
+INSERT INTO Connection (ID, StartNodeName, EndNodeName, Delay) VALUES (1, 'a', 'b', '8');

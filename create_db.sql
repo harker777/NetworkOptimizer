@@ -11,8 +11,8 @@ USE `mydb` ;
 CREATE  TABLE IF NOT EXISTS `mydb`.`Task` (
   `ID` INT NOT NULL ,
   `Name` VARCHAR(45) NULL DEFAULT 'Name' ,
-  `StartNodeName` VARCHAR(1) NULL ,
-  `EndNodeName` VARCHAR(1) NULL ,
+  `StartNodeName` CHAR NULL ,
+  `EndNodeName` CHAR NULL ,
   `Timestamp` DATETIME NULL ,
   PRIMARY KEY (`ID`) )
 ENGINE = InnoDB;
@@ -23,7 +23,14 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 CREATE  TABLE IF NOT EXISTS `mydb`.`Solution` (
   `ID` INT NOT NULL ,
-  PRIMARY KEY (`ID`) )
+  `Task_ID` INT NOT NULL ,
+  PRIMARY KEY (`ID`) ,
+  INDEX `fk_Solution_Task1_idx` (`Task_ID` ASC) ,
+  CONSTRAINT `fk_Solution_Task1`
+    FOREIGN KEY (`Task_ID` )
+    REFERENCES `mydb`.`Task` (`ID` )
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
@@ -32,9 +39,9 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 CREATE  TABLE IF NOT EXISTS `mydb`.`Connection` (
   `ID` INT NOT NULL ,
-  `StartNodeName` VARCHAR(1) NOT NULL ,
-  `EndNodeName` VARCHAR(1) NOT NULL ,
-  `Delay` FLOAT NOT NULL ,
+  `StartNodeName` CHAR NOT NULL ,
+  `EndNodeName` CHAR NOT NULL ,
+  `Delay` DOUBLE NOT NULL ,
   `Task_ID` INT NULL ,
   `Solution_ID` INT NULL ,
   PRIMARY KEY (`ID`) ,

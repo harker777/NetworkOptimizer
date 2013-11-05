@@ -1,0 +1,22 @@
+CREATE  TABLE IF NOT EXISTS Task (
+  ID INT NOT NULL ,
+  Name VARCHAR(45) ,
+  StartNodeName CHAR ,
+  EndNodeName CHAR ,
+  Timestamp DATETIME NULL ,
+  PRIMARY KEY (ID) );
+
+
+CREATE  TABLE IF NOT EXISTS Solution (
+  ID INT NOT NULL ,
+  Task_ID INT NOT NULL ,
+  PRIMARY KEY (ID) );
+
+CREATE  TABLE IF NOT EXISTS Connection (
+  ID INT NOT NULL ,
+  StartNodeName CHAR NOT NULL ,
+  EndNodeName CHAR NOT NULL ,
+  Delay DOUBLE NOT NULL ,
+  Task_ID INT ,
+  Solution_ID INT ,
+  PRIMARY KEY (ID) );
