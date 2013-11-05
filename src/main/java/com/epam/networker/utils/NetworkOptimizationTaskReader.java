@@ -1,8 +1,4 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-package com.epam.networker;
+package com.epam.networker.utils;
 
 import com.epam.networker.entities.NetworkConnection;
 import com.epam.networker.entities.NetworkOptimizationTask;
