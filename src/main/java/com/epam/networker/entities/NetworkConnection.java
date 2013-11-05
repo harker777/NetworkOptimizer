@@ -29,6 +29,9 @@ public class NetworkConnection {
 		}
 	}
 
+	public NetworkConnection() {
+	}
+
 	public char getStartNodeName() {
 		return startNodeName;
 	}

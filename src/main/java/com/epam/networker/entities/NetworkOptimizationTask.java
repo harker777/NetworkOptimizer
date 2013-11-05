@@ -1,5 +1,6 @@
 package com.epam.networker.entities;
 
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -13,6 +14,10 @@ public class NetworkOptimizationTask {
 	private char startNodeName;
 	private char endNodeName;
 	private List<NetworkConnection> connections;
+
+	public NetworkOptimizationTask() {
+		connections = new LinkedList<NetworkConnection>();
+	}
 
 	/**
 	 * Initializes object with specified start-end nodes names and connections list
