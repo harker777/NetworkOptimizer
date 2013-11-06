@@ -6,7 +6,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Connections</title>
+        <title>Tasks:</title>
     </head>
 
     <body>
@@ -21,24 +21,21 @@
 		<td>
 		    Ending point:
 		</td>
-		<td>
-		    Delay:
-		</td>
 	    </tr>
 
-	    <c:forEach items="${connections}" var="connection">
+	    <c:forEach items="${tasks}" var="task">
 		<tr>
 		    <td>
-			${connection.id}
+			${task.id}
 		    </td>
 		    <td>
-			${connection.startNodeName}
+			${task.startNodeName}
 		    </td>
 		    <td>
-			${connection.endNodeName}
+			${task.endNodeName}
 		    </td>
 		    <td>
-			${connection.delay}
+			<a href="/${task.id}" > Details </a>
 		    </td>
 		</tr>
 	    </c:forEach>

@@ -6,7 +6,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Connections</title>
+        <title>Task</title>
     </head>
 
     <body>
@@ -26,7 +26,7 @@
 		</td>
 	    </tr>
 
-	    <c:forEach items="${connections}" var="connection">
+	    <c:forEach items="${task.connectionCollection}" var="connection">
 		<tr>
 		    <td>
 			${connection.id}
