@@ -4,8 +4,10 @@
  */
 package com.epam.networker.db.entities;
 
+import com.epam.networker.entities.NetworkConnection;
 import java.io.Serializable;
 import java.util.Collection;
+import java.util.LinkedList;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -35,6 +37,14 @@ public class Solution implements Serializable {
 	private Task taskID;
 
 	public Solution() {
+		connectionCollection = new LinkedList<Connection>();
+	}
+
+	public Solution(Collection<NetworkConnection> connections) {
+		for (NetworkConnection connection : connections) {
+			Connection connectionEntity = new Connection(connection);
+			connectionCollection.add(connectionEntity);
+		}
 	}
 
 	public Solution(Integer id) {
