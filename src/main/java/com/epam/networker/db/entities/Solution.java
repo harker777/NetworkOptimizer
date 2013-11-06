@@ -6,17 +6,15 @@ package com.epam.networker.db.entities;
 
 import java.io.Serializable;
 import java.util.Collection;
-import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import static javax.persistence.GenerationType.IDENTITY;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
 
 /**
  *
@@ -27,8 +25,7 @@ import javax.validation.constraints.NotNull;
 public class Solution implements Serializable {
 
 	@Id
-	@Basic(optional = false)
-	@NotNull
+	@GeneratedValue(strategy = IDENTITY)
 	@Column(name = "ID")
 	private Integer id;
 	@OneToMany(mappedBy = "solutionID")

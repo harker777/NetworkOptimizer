@@ -10,20 +10,17 @@ import java.io.Serializable;
 import java.util.Collection;
 import java.util.Date;
 import java.util.LinkedList;
-import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import static javax.persistence.GenerationType.IDENTITY;
 import javax.persistence.Id;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import org.apache.taglibs.standard.tag.common.core.ForEachSupport;
 
 /**
  *
@@ -34,8 +31,7 @@ import org.apache.taglibs.standard.tag.common.core.ForEachSupport;
 public class Task implements Serializable {
 
 	@Id
-	@Basic(optional = false)
-	@NotNull
+	@GeneratedValue(strategy = IDENTITY)
 	@Column(name = "ID")
 	private Integer id;
 	@Size(max = 45)
