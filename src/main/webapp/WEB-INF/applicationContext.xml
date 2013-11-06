@@ -37,7 +37,7 @@
 		<property name="jpaVendorAdapter">
 			<bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter" />
 		</property>
-		<property name="packagesToScan" value="com.epam.db" />
+		<property name="packagesToScan" value="com.epam.networker.db" />
 		<property name="jpaProperties">
 			<props>
 				<prop key="hibernate.dialect">
@@ -49,6 +49,8 @@
 			</props>
 		</property>
 	</bean>
+
+	<bean id="connectionService" class="com.epam.networker.db.service.ConnectionServiceImpl"> </bean>
 
 	<context:annotation-config />
 
