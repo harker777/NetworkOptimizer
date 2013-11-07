@@ -38,6 +38,7 @@ public class TaskUploadController {
 	private ConnectionService connectionService;
 	@Autowired
 	private SolutionService solutionService;
+	private NetworkOptimizationTaskSolver solver = new NaiveNetworkOptimizationTaskSolver();
 
 	@RequestMapping(value = "/uploadForm")
 	public String getUploadForm(
@@ -47,7 +48,7 @@ public class TaskUploadController {
 	}
 
 	@RequestMapping(value = "/uploadFile")
-	public ModelAndView fileUploaded(
+	public String fileUploaded(
 			@ModelAttribute("uploadedFile") UploadedFile uploadedFile,
 			BindingResult result) {
 		MultipartFile file = uploadedFile.getFile();
@@ -59,18 +60,20 @@ public class TaskUploadController {
 				connection.setTaskID(taskEntity);
 				connectionService.save(connection);
 			}
-			NetworkOptimizationTaskSolver solver = new NaiveNetworkOptimizationTaskSolver();
 			List<NetworkConnection> solutionConnections = solver.solve(task);
 
 			Solution solution = new Solution(solutionConnections);
-			solutionService.save(solution);
+			solution.setTaskID(taskEntity);
+			solution = solutionService.save(solution);
 			for (Connection connection : solution.getConnectionCollection()) {
+				connection.setSolutionID(solution);
 				connectionService.save(connection);
 			}
 
+			return "redirect:/solutions/" + solution.getId();
 		} catch (IOException ex) {
+			return "/uploadForm";
 		}
 
-		return new ModelAndView("/uploadForm");
 	}
 }

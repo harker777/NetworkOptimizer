@@ -10,38 +10,38 @@
     </head>
 
     <body>
-	<table>
-	    <tr>
-		<td>
-		    ID:
-		</td>
-		<td>
-		    Starting point:
-		</td>
-		<td>
-		    Ending point:
-		</td>
-		<td>
-		    Delay:
-		</td>
-	    </tr>
+		<table>
+			<tr>
+				<td>
+					ID:
+				</td>
+				<td>
+					Starting point:
+				</td>
+				<td>
+					Ending point:
+				</td>
+				<td>
+					Delay:
+				</td>
+			</tr>
 
-	    <c:forEach items="${task.connectionCollection}" var="connection">
-		<tr>
-		    <td>
-			${connection.id}
-		    </td>
-		    <td>
-			${connection.startNodeName}
-		    </td>
-		    <td>
-			${connection.endNodeName}
-		    </td>
-		    <td>
-			${connection.delay}
-		    </td>
-		</tr>
-	    </c:forEach>
-	</table>
+			<c:forEach items="${solution.connectionCollection}" var="connection">
+				<tr>
+					<td>
+						${connection.id}
+					</td>
+					<td>
+						${connection.startNodeName}
+					</td>
+					<td>
+						${connection.endNodeName}
+					</td>
+					<td>
+						${connection.delay}
+					</td>
+				</tr>
+			</c:forEach>
+		</table>
     </body>
 </html>

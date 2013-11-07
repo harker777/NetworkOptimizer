@@ -41,6 +41,7 @@ public class Solution implements Serializable {
 	}
 
 	public Solution(Collection<NetworkConnection> connections) {
+		this();
 		for (NetworkConnection connection : connections) {
 			Connection connectionEntity = new Connection(connection);
 			connectionCollection.add(connectionEntity);
