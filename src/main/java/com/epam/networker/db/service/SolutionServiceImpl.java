@@ -5,6 +5,7 @@
 package com.epam.networker.db.service;
 
 import com.epam.networker.db.entities.Solution;
+import com.epam.networker.db.entities.Task;
 import com.epam.networker.db.repository.SolutionRepository;
 import com.google.common.collect.Lists;
 import java.util.List;

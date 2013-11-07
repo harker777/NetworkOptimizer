@@ -70,7 +70,7 @@ public class TaskUploadController {
 				connectionService.save(connection);
 			}
 
-			return "redirect:/solutions/" + solution.getId();
+			return "redirect:/tasks/" + taskEntity.getId();
 		} catch (IOException ex) {
 			return "/uploadForm";
 		}

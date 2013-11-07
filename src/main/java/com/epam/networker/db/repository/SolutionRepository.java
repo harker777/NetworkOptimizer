@@ -5,6 +5,8 @@
 package com.epam.networker.db.repository;
 
 import com.epam.networker.db.entities.Solution;
+import com.epam.networker.db.entities.Task;
+import java.util.List;
 import org.springframework.data.repository.CrudRepository;
 
 /**

@@ -1,6 +1,7 @@
 package com.epam.networker.db.service;
 
 import com.epam.networker.db.entities.Solution;
+import com.epam.networker.db.entities.Task;
 import java.util.List;
 
 /**
