@@ -4,8 +4,9 @@
  */
 package com.epam.networker.db.service;
 
+import com.epam.networker.db.entities.Connection;
 import com.epam.networker.db.entities.Solution;
-import com.epam.networker.db.entities.Task;
+import com.epam.networker.db.repository.ConnectionRepository;
 import com.epam.networker.db.repository.SolutionRepository;
 import com.google.common.collect.Lists;
 import java.util.List;
@@ -23,6 +24,8 @@ public class SolutionServiceImpl implements SolutionService {
 
 	@Autowired
 	SolutionRepository solutionRepository;
+	@Autowired
+	ConnectionRepository connectionRepository;
 
 	@Override
 	public List<Solution> findAll() {
@@ -36,6 +39,11 @@ public class SolutionServiceImpl implements SolutionService {
 
 	@Override
 	public Solution save(Solution solution) {
-		return solutionRepository.save(solution);
+		Solution savedSolution = solutionRepository.save(solution);
+		for (Connection connection : savedSolution.getConnectionCollection()) {
+			connection.setSolutionID(solution);
+			connectionRepository.save(connection);
+		}
+		return savedSolution;
 	}
 }

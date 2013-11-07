@@ -6,7 +6,6 @@ package com.epam.networker.controller;
 
 import com.epam.networker.algorithms.NaiveNetworkOptimizationTaskSolver;
 import com.epam.networker.algorithms.NetworkOptimizationTaskSolver;
-import com.epam.networker.db.entities.Connection;
 import com.epam.networker.db.entities.Solution;
 import com.epam.networker.db.entities.Task;
 import com.epam.networker.db.service.ConnectionService;
@@ -23,7 +22,6 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.ModelAndView;
 
 /**
  *
@@ -56,19 +54,12 @@ public class TaskUploadController {
 			NetworkOptimizationTask task = NetworkOptimizationTaskReader.readOptimizationTask(file.getInputStream());
 			Task taskEntity = new Task(task);
 			taskService.save(taskEntity);
-			for (Connection connection : taskEntity.getConnectionCollection()) {
-				connection.setTaskID(taskEntity);
-				connectionService.save(connection);
-			}
+
 			List<NetworkConnection> solutionConnections = solver.solve(task);
 
 			Solution solution = new Solution(solutionConnections);
 			solution.setTaskID(taskEntity);
-			solution = solutionService.save(solution);
-			for (Connection connection : solution.getConnectionCollection()) {
-				connection.setSolutionID(solution);
-				connectionService.save(connection);
-			}
+			solutionService.save(solution);
 
 			return "redirect:/tasks/" + taskEntity.getId();
 		} catch (IOException ex) {

@@ -35,7 +35,7 @@
 			${task.endNodeName}
 		    </td>
 		    <td>
-			<a href="tasks/${task.id}" > Details </a>
+			<a href="${task.id}" > Details </a>
 		    </td>
 		</tr>
 	    </c:forEach>

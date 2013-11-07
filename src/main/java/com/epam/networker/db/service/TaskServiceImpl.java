@@ -1,6 +1,8 @@
 package com.epam.networker.db.service;
 
+import com.epam.networker.db.entities.Connection;
 import com.epam.networker.db.entities.Task;
+import com.epam.networker.db.repository.ConnectionRepository;
 import com.epam.networker.db.repository.TaskRepository;
 import com.google.common.collect.Lists;
 import java.util.List;
@@ -18,6 +20,8 @@ public class TaskServiceImpl implements TaskService {
 
 	@Autowired
 	private TaskRepository taskRepository;
+	@Autowired
+	private ConnectionRepository connectionRepository;
 
 	@Override
 	public List<Task> findAll() {
@@ -31,6 +35,11 @@ public class TaskServiceImpl implements TaskService {
 
 	@Override
 	public Task save(Task task) {
-		return taskRepository.save(task);
+		Task savedTask = taskRepository.save(task);
+		for (Connection connection : savedTask.getConnectionCollection()) {
+			connection.setTaskID(savedTask);
+			connectionRepository.save(connection);
+		}
+		return savedTask;
 	}
 }
