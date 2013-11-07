@@ -35,10 +35,12 @@
 			${task.endNodeName}
 		    </td>
 		    <td>
-			<a href="${task.id}" > Details </a>
+			<a href="tasks/${task.id}"> Details </a>
 		    </td>
 		</tr>
 	    </c:forEach>
 	</table>
+
+	<a href="uploadForm"> Upload new task </a>
     </body>
 </html>

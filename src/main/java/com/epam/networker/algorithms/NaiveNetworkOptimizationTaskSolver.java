@@ -113,9 +113,8 @@ public class NaiveNetworkOptimizationTaskSolver implements NetworkOptimizationTa
 						SolversUtils.isConnectionBoundary(secondNetworkConnection, task.getStartNodeName(), task.getEndNodeName());
 				boolean bothConnectionsAreComplete =
 						SolversUtils.isConnectionComplete(firstNetworkConnection, task.getStartNodeName(), task.getEndNodeName());
-				boolean connectionsCanBeOptimizedParallel =
-						connectionsAreParallel && ((!firstConnectionIsBoundary && !secondConnectionIsBoundary)
-						|| bothConnectionsAreComplete);
+				boolean connectionsCanBeOptimizedParallel = connectionsAreParallel
+						&& ((!firstConnectionIsBoundary && !secondConnectionIsBoundary) || bothConnectionsAreComplete);
 
 				boolean commonConnectionIsBoundary =
 						SolversUtils.getCommonNodes(firstNetworkConnection, secondNetworkConnection).contains(task.getStartNodeName())
