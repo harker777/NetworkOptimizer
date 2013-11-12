@@ -1,6 +1,8 @@
 package com.epam.networker.algorithms;
 
 import com.epam.networker.entities.NetworkConnection;
+import com.epam.networker.entities.Optimization;
+import com.epam.networker.entities.OptimizationType;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.LinkedList;
@@ -64,9 +66,9 @@ public class SolversUtils {
 	public static boolean isConnectionIntermediate(
 			NetworkConnection connection, char startNodeName, char endNodeName) {
 		if (connection.getStartNodeName() == startNodeName
-				|| connection.getStartNodeName() == endNodeName
-				|| connection.getEndNodeName() == startNodeName
-				|| connection.getEndNodeName() == endNodeName) {
+			|| connection.getStartNodeName() == endNodeName
+			|| connection.getEndNodeName() == startNodeName
+			|| connection.getEndNodeName() == endNodeName) {
 			return false;
 		}
 
@@ -97,11 +99,11 @@ public class SolversUtils {
 	public static boolean isConnectionComplete(
 			NetworkConnection connection, char startNodeName, char endNodeName) {
 		if (connection.getStartNodeName() == startNodeName
-				&& connection.getEndNodeName() == endNodeName) {
+			&& connection.getEndNodeName() == endNodeName) {
 			return true;
 		}
 		if (connection.getStartNodeName() == endNodeName
-				&& connection.getEndNodeName() == startNodeName) {
+			&& connection.getEndNodeName() == startNodeName) {
 			return true;
 		}
 
@@ -109,8 +111,8 @@ public class SolversUtils {
 	}
 
 	/**
-	 * Checks if two connections are parallel. For example: (a,b,2) and (b,a,8) are parallel, but
-	 * (a,b,2) and (c,d,4) are not. Connection is not parallel to itself.
+	 * Checks if two connections are parallel. For example: (a,b,2) and (b,a,8) are parallel, but (a,b,2) and (c,d,4)
+	 * are not. Connection is not parallel to itself.
 	 *
 	 * @param firstConnection
 	 * @param secondConnection
@@ -123,19 +125,19 @@ public class SolversUtils {
 			return false;
 		}
 		if (firstConnection.getStartNodeName() == secondConnection.getStartNodeName()
-				&& firstConnection.getEndNodeName() == secondConnection.getEndNodeName()) {
+			&& firstConnection.getEndNodeName() == secondConnection.getEndNodeName()) {
 			return true;
 		}
 		if (firstConnection.getStartNodeName() == secondConnection.getEndNodeName()
-				&& firstConnection.getEndNodeName() == secondConnection.getStartNodeName()) {
+			&& firstConnection.getEndNodeName() == secondConnection.getStartNodeName()) {
 			return true;
 		}
 		return false;
 	}
 
 	/**
-	 * Checks if two connections are in series. For example: (a,b,2) and (b,c,8) are parallel, but
-	 * (a,b,2) and (c,d,4) are not. Connection is not in series with itself.
+	 * Checks if two connections are in series. For example: (a,b,2) and (b,c,8) are parallel, but (a,b,2) and (c,d,4)
+	 * are not. Connection is not in series with itself.
 	 *
 	 * @param firstConnection
 	 * @param secondConnection
@@ -152,14 +154,17 @@ public class SolversUtils {
 			return false;
 		}
 		if (firstConnection.getStartNodeName() == secondConnection.getStartNodeName()
-				|| firstConnection.getStartNodeName() == secondConnection.getEndNodeName()
-				|| firstConnection.getEndNodeName() == secondConnection.getStartNodeName()
-				|| firstConnection.getEndNodeName() == secondConnection.getEndNodeName()) {
+			|| firstConnection.getStartNodeName() == secondConnection.getEndNodeName()
+			|| firstConnection.getEndNodeName() == secondConnection.getStartNodeName()
+			|| firstConnection.getEndNodeName() == secondConnection.getEndNodeName()) {
 			return true;
 		}
 		return false;
 	}
 
+	/**
+	 * Returns a set of common nodes of two connections
+	 */
 	public static Set<Character> getCommonNodes(
 			NetworkConnection firstConnection, NetworkConnection secondConnection) {
 		Set<Character> commonNodes = new HashSet<Character>();
@@ -176,5 +181,27 @@ public class SolversUtils {
 			commonNodes.add(firstConnection.getEndNodeName());
 		}
 		return commonNodes;
+	}
+
+	/**
+	 * Applies the given optimization to given list. It modifies the list by removing old connections and adding the new
+	 * one (result of optimization)
+	 *
+	 * @param connections
+	 * @param optimization
+	 */
+	public static void applyOptimization(List<NetworkConnection> connections, Optimization optimization) {
+		NetworkConnection newConnection;
+		if (optimization.getType() == OptimizationType.IN_SERIES) {
+			newConnection = ConnectionsOptimizer.optimizeInSeriesConnections(
+					optimization.getFirstConnection(), optimization.getSecondConnection());
+		} else {
+			newConnection = ConnectionsOptimizer.optimizeParallelConnections(
+					optimization.getFirstConnection(), optimization.getSecondConnection());
+		}
+
+		connections.remove(optimization.getFirstConnection());
+		connections.remove(optimization.getSecondConnection());
+		connections.add(newConnection);
 	}
 }

@@ -10,37 +10,37 @@
     </head>
 
     <body>
-	<table>
-	    <tr>
-		<td>
-		    ID:
-		</td>
-		<td>
-		    Starting point:
-		</td>
-		<td>
-		    Ending point:
-		</td>
-	    </tr>
+		<table>
+			<tr>
+				<td>
+					ID:
+				</td>
+				<td>
+					Starting point:
+				</td>
+				<td>
+					Ending point:
+				</td>
+			</tr>
 
-	    <c:forEach items="${tasks}" var="task">
-		<tr>
-		    <td>
-			${task.id}
-		    </td>
-		    <td>
-			${task.startNodeName}
-		    </td>
-		    <td>
-			${task.endNodeName}
-		    </td>
-		    <td>
-			<a href="tasks/${task.id}"> Details </a>
-		    </td>
-		</tr>
-	    </c:forEach>
-	</table>
+			<c:forEach items="${tasks}" var="task">
+				<tr>
+					<td>
+						${task.id}
+					</td>
+					<td>
+						${task.startNodeName}
+					</td>
+					<td>
+						${task.endNodeName}
+					</td>
+					<td>
+						<a href="${task.id}"> Details </a>
+					</td>
+				</tr>
+			</c:forEach>
+		</table>
 
-	<a href="uploadForm"> Upload new task </a>
+		<a href="../uploadForm"> Upload new task </a>
     </body>
 </html>

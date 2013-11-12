@@ -33,10 +33,9 @@ public class TaskUploadController {
 	@Autowired
 	private TaskService taskService;
 	@Autowired
-	private ConnectionService connectionService;
-	@Autowired
 	private SolutionService solutionService;
-	private NetworkOptimizationTaskSolver solver = new NaiveNetworkOptimizationTaskSolver();
+	@Autowired
+	private NetworkOptimizationTaskSolver solver;
 
 	@RequestMapping(value = "/uploadForm")
 	public String getUploadForm(

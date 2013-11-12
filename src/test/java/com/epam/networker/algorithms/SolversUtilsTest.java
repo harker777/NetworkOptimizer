@@ -147,10 +147,9 @@ public class SolversUtilsTest {
 	@Test
 	public void testGetIntermediateConnectionsReturnsIntermediateConnections() {
 		NetworkConnection[] expResult = intermediateConnections.toArray(new NetworkConnection[]{});
-		NetworkConnection[] actualResult = SolversUtils.getIntermediateConnections(connections, startNodeName, endNodeName).
+		NetworkConnection[] actualResult = SolversUtils.getIntermediateConnections(connections, startNodeName,
+																				   endNodeName).
 				toArray(new NetworkConnection[]{});
-		System.out.println(Arrays.asList(expResult));
-		System.out.println(Arrays.asList(actualResult));
 		assertArrayEquals(expResult, actualResult);
 	}
 
@@ -166,8 +165,8 @@ public class SolversUtilsTest {
 	}
 
 	/**
-	 * Checks if connectionsAreParallel returns true on parallel connections with same direction
-	 * (for example, (a,b,2) and (a,b,4))
+	 * Checks if connectionsAreParallel returns true on parallel connections with same direction (for example, (a,b,2)
+	 * and (a,b,4))
 	 */
 	@Test
 	public void testConnectionsAreParallelReturnsTrueOnParallelSameDirection() {
@@ -179,8 +178,8 @@ public class SolversUtilsTest {
 	}
 
 	/**
-	 * Checks if connectionsAreParallel returns true on parallel connections with different
-	 * direction (for example, (a,b,2) and (b,a,4))
+	 * Checks if connectionsAreParallel returns true on parallel connections with different direction (for example,
+	 * (a,b,2) and (b,a,4))
 	 */
 	@Test
 	public void testConnectionsAreParallelReturnsTrueOnParallelDifferentDirection() {
@@ -203,8 +202,8 @@ public class SolversUtilsTest {
 	}
 
 	/**
-	 * Checks if connectionsAreParallel returns false on absolutely different connections (for
-	 * example - (a,b,2) and (c,d,4))
+	 * Checks if connectionsAreParallel returns false on absolutely different connections (for example - (a,b,2) and
+	 * (c,d,4))
 	 */
 	@Test
 	public void testConnectionsAreParallelReturnsFalseOnAbsolutelyDifferentConnections() {
@@ -216,8 +215,8 @@ public class SolversUtilsTest {
 	}
 
 	/**
-	 * Checks if connectionsAreParallel returns false on connections with one common node (for
-	 * example - (a,b,2) and (b,d,4))
+	 * Checks if connectionsAreParallel returns false on connections with one common node (for example - (a,b,2) and
+	 * (b,d,4))
 	 */
 	@Test
 	public void testConnectionsAreParallelReturnsFalseOnConnectionsWithOneCommonNode() {
@@ -229,8 +228,8 @@ public class SolversUtilsTest {
 	}
 
 	/**
-	 * Checks if connectionsAreInSeries returns true on connections in series with same direction
-	 * (for example - (a,b,2) and (b,d,4))
+	 * Checks if connectionsAreInSeries returns true on connections in series with same direction (for example - (a,b,2)
+	 * and (b,d,4))
 	 */
 	@Test
 	public void testConnectionsAreInSeriesReturnsTrueOnConnectionsWithSameDirection() {
@@ -242,8 +241,8 @@ public class SolversUtilsTest {
 	}
 
 	/**
-	 * Checks if connectionsAreInSeries returns true on connections in series with different
-	 * directions (for example - (a,b,2) and (d,b,4))
+	 * Checks if connectionsAreInSeries returns true on connections in series with different directions (for example -
+	 * (a,b,2) and (d,b,4))
 	 */
 	@Test
 	public void testConnectionsAreInSeriesReturnsTrueOnConnectionsWithDifferentDirection() {
@@ -255,8 +254,8 @@ public class SolversUtilsTest {
 	}
 
 	/**
-	 * Checks if connectionsAreInSeries returns false on connections which are absolutely not
-	 * connected (for example - (a,b,2) and (c,d,2))
+	 * Checks if connectionsAreInSeries returns false on connections which are absolutely not connected (for example -
+	 * (a,b,2) and (c,d,2))
 	 */
 	@Test
 	public void testConnectionsAreInSeriesReturnsFalseOnAbsolutelyDifferentConnections() {
@@ -279,8 +278,7 @@ public class SolversUtilsTest {
 	}
 
 	/**
-	 * Checks if connectionsAreInSeries returns false on parallel connections (for example - (a,b,2)
-	 * and (b,a,4))
+	 * Checks if connectionsAreInSeries returns false on parallel connections (for example - (a,b,2) and (b,a,4))
 	 */
 	@Test
 	public void testConnectionsAreInSeriesReturnsFalseOnParallelConnections() {

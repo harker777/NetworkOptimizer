@@ -10,70 +10,70 @@
     </head>
 
     <body>
-	<table>
-	    <tr>
-		<td>
-		    ID:
-		</td>
-		<td>
-		    Starting point:
-		</td>
-		<td>
-		    Ending point:
-		</td>
-		<td>
-		    Delay:
-		</td>
-	    </tr>
+		<table>
+			<tr>
+				<td>
+					ID:
+				</td>
+				<td>
+					Starting point:
+				</td>
+				<td>
+					Ending point:
+				</td>
+				<td>
+					Delay:
+				</td>
+			</tr>
 
-	    <c:forEach items="${task.connectionCollection}" var="connection">
-		<tr>
-		    <td>
-			${connection.id}
-		    </td>
-		    <td>
-			${connection.startNodeName}
-		    </td>
-		    <td>
-			${connection.endNodeName}
-		    </td>
-		    <td>
-			${connection.delay}
-		    </td>
-		</tr>
-	    </c:forEach>
+			<c:forEach items="${task.connectionCollection}" var="connection">
+				<tr>
+					<td>
+						${connection.id}
+					</td>
+					<td>
+						${connection.startNodeName}
+					</td>
+					<td>
+						${connection.endNodeName}
+					</td>
+					<td>
+						${connection.delay}
+					</td>
+				</tr>
+			</c:forEach>
 
 
-	    <tr>
-		<td> Solutions </td>
-	    </tr>
+			<tr>
+				<td> Solutions </td>
+			</tr>
 
-	    <c:forEach items="${task.solutionCollection}" var="solution" varStatus="index">
-		<tr>
-		    <td colspan="4">
-			Solution (${index.count})
-		    </td>
-		</tr>
+			<c:forEach items="${task.solutionCollection}" var="solution" varStatus="index">
+				<tr>
+					<td colspan="4">
+						Solution (${index.count})
+					</td>
+				</tr>
 
-		<c:forEach items="${solution.connectionCollection}" var="connection">
-		    <tr>
-			<td>
-			    ${connection.id}
-			</td>
-			<td>
-			    ${connection.startNodeName}
-			</td>
-			<td>
-			    ${connection.endNodeName}
-			</td>
-			<td>
-			    ${connection.delay}
-			</td>
-		    </tr>
-		</c:forEach>
-	    </c:forEach>
+				<c:forEach items="${solution.connectionCollection}" var="connection">
+					<tr>
+						<td>
+							${connection.id}
+						</td>
+						<td>
+							${connection.startNodeName}
+						</td>
+						<td>
+							${connection.endNodeName}
+						</td>
+						<td>
+							${connection.delay}
+						</td>
+					</tr>
+				</c:forEach>
+			</c:forEach>
 
-	</table>
-	<a href="../"> Other tasks </a>
+		</table>
+		<a href="."> Other tasks </a>
     </body>
 </html>

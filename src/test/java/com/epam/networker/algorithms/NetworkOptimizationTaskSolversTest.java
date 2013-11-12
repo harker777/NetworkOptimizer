@@ -16,7 +16,7 @@ import org.junit.Test;
  *
  * @author Iaroslav_Mazai
  */
-public class NaiveNetworkOptimizationTaskSolverTest {
+public class NetworkOptimizationTaskSolversTest {
 
 	NetworkConnection[] connectionsForSmallTaskArray = {
 		new NetworkConnection('a', 'e', 2),
@@ -27,7 +27,7 @@ public class NaiveNetworkOptimizationTaskSolverTest {
 		new NetworkConnection('d', 'b', 0)
 	};
 	List<NetworkConnection> connectionsForSmallTask =
-			new LinkedList<NetworkConnection>(Arrays.asList(connectionsForSmallTaskArray));
+							new LinkedList<NetworkConnection>(Arrays.asList(connectionsForSmallTaskArray));
 	NetworkOptimizationTask smallTask = new NetworkOptimizationTask('a', 'b', connectionsForSmallTask);
 
 	/**
@@ -35,8 +35,20 @@ public class NaiveNetworkOptimizationTaskSolverTest {
 	 *
 	 */
 	@Test
-	public void testSolveWithSmallTask() {
+	public void testNaiveSolverWithSmallTask() {
 		NetworkOptimizationTaskSolver solver = new NaiveNetworkOptimizationTaskSolver();
+		List<NetworkConnection> expResult = Arrays.asList(new NetworkConnection[]{new NetworkConnection('a', 'b', 2)});
+		List<NetworkConnection> actualResult = solver.solve(smallTask);
+		assertEquals(expResult, actualResult);
+	}
+
+	/**
+	 * Checks if simpleOptimizationTaskSolver return right result on small task
+	 *
+	 */
+	@Test
+	public void testSimpleSolverWithSmallTask() {
+		NetworkOptimizationTaskSolver solver = new SimpleNetworkOptimizationTaskSolver();
 		List<NetworkConnection> expResult = Arrays.asList(new NetworkConnection[]{new NetworkConnection('a', 'b', 2)});
 		List<NetworkConnection> actualResult = solver.solve(smallTask);
 		assertEquals(expResult, actualResult);
